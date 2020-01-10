@@ -35,3 +35,4 @@ class GSOP(object):
 a = np.array([[1,2,0],[8,1,-6],[0,0,1]])
 model = GSOP(a)
 result = model.final_projected_matrix()
+print(result)
