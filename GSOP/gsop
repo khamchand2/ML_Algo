@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 11 03:07:49 2020
+
+@author: khamchand
+"""
+import numpy as np
+
+class GSOP(object):
+    def __init__(self,U):
+        self.U = U
+    def projection_compute(self,u,v):
+        ''' Computaing the projection of one vector '''
+        proj = u.dot(v)*u
+        return proj       
+    
+    def final_projected_matrix(self):
+        '''
+        Computing the final projected matrix here.
+        '''
+        E = np.zeros(self.U.shape)
+        for i in range(self.U.shape[0]):
+            if i == 0:
+                E[i] = self.U[i]/np.linalg.norm(self.U[i])
+            else:
+                s = 0
+                for j in range(i):
+                    s += self.projection_compute(E[j],self.U[i])
+                p = self.U[i] - s
+                E[i] = p / np.linalg.norm(p)
+        return E
+
+
+a = np.array([[1,2,0],[8,1,-6],[0,0,1]])
+model = GSOP(a)
+result = model.final_projected_matrix()
